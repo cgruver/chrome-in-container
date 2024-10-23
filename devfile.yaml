@@ -1,0 +1,55 @@
+schemaVersion: 2.2.0
+attributes:
+  controller.devfile.io/storage-type: per-workspace
+metadata:
+  name: devspaces-chrome-in-container
+components:
+- name: dev-tools
+  attributes:
+    pod-overrides:
+      metadata:
+        annotations:
+          io.kubernetes.cri-o.Devices: "/dev/fuse"
+  container:
+    image: quay.io/cgruver0/che/nested-userns:latest
+    memoryLimit: 6Gi
+    mountSources: true
+    env:
+    - name: SHELL
+      value: "/bin/zsh"
+    - name: HOME
+      value: "/projects/home"
+    - name: VSCODE_DEFAULT_WORKSPACE
+      value: "/projects/devspaces-chrome-in-container/devspaces-chrome-in-container.code-workspace"
+    - name: GOPATH
+      value: /projects/home/go
+- volume:
+    size: 20Gi
+  name: projects
+- name: prep-workspace
+  container:
+    args:
+      - '-c'
+      - >-
+        mkdir -p /projects/bin && cp /usr/bin/oc /projects/bin/oc && cp /usr/bin/kubectl /projects/bin/kubectl && if [[ -f ${HOME}/.kube/config ]]; then rm ${HOME}/.kube/config; fi
+    command:
+      - /bin/bash
+    image: image-registry.openshift-image-registry.svc:5000/openshift/cli:latest
+    mountSources: true
+    sourceMapping: /projects
+    memoryRequest: 128Mi
+    memoryLimit: 256Mi
+    cpuRequest: 10m
+    cpuLimit: 200m
+    env:
+    - name: HOME
+      value: "/projects/home"
+commands:
+- apply:
+    component: prep-workspace
+    label: Copy OpenShift CLI
+  id: prep-workspace
+events:
+  preStart:
+    - prep-workspace
+
