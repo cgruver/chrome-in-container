@@ -9,7 +9,12 @@ components:
     pod-overrides:
       metadata:
         annotations:
-          io.kubernetes.cri-o.Devices: "/dev/fuse"
+          io.kubernetes.cri-o.Devices: "/dev/fuse,/dev/net/tun"
+      spec:
+        hostUsers: false
+    container-overrides: 
+      securityContext:
+        procMount: Unmasked
   container:
     image: quay.io/cgruver0/che/nested-userns:latest
     memoryLimit: 6Gi
@@ -23,6 +28,11 @@ components:
       value: "/projects/devspaces-chrome-in-container/devspaces-chrome-in-container.code-workspace"
     - name: GOPATH
       value: /projects/home/go
+    endpoints:
+      - exposure: public
+        name: tiger-vnc
+        protocol: https
+        targetPort: 3000
 - volume:
     size: 20Gi
   name: projects
