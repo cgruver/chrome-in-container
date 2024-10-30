@@ -2,7 +2,7 @@ schemaVersion: 2.2.0
 attributes:
   controller.devfile.io/storage-type: per-workspace
 metadata:
-  name: devspaces-chrome-in-container
+  name: chrome-in-container
 components:
 - name: dev-tools
   attributes:
@@ -25,7 +25,7 @@ components:
     - name: HOME
       value: "/projects/home"
     - name: VSCODE_DEFAULT_WORKSPACE
-      value: "/projects/devspaces-chrome-in-container/devspaces-chrome-in-container.code-workspace"
+      value: "/projects/chrome-in-container/chrome-in-container.code-workspace"
     - name: GOPATH
       value: /projects/home/go
     endpoints:
