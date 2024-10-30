@@ -1,4 +1,4 @@
-# Run Local Chrome Browser in Workspace
+# Run Chrome Browser in a Container
 
 __Note:__ You will need `cluster-admin` privileges, or be granted access to the `etc-pki-entitlement` Secret by a `cluster-admin` for this first step.
 
