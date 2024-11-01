@@ -1,11 +1,8 @@
 {
 	"folders": [
 		{
-			"name": "devspaces-chrome-in-container",
-			"path": "/projects/devspaces-chrome-in-container"
-		},
-		{
-			"path": "../devspaces-chrome-sidecar"
+			"name": "chrome-in-container",
+			"path": "/projects/chrome-in-container"
 		}
 	],
 	"extensions": {
